@@ -1,0 +1,17 @@
+{
+    "professor":{
+        "Olvera":[
+            "Meeting 1"
+        ],
+        "Gianneschi":[
+            "Meeting 1",
+            "Meeting 2",
+            "Meeting 3",
+            "Meeting 4"
+        ],
+        "Barnett":[
+            "Meeting 1",
+            
+        ]
+    }
+}
