@@ -36,12 +36,12 @@ professor_sort_key = lambda x: x.availability_metric
 
 # RunTime Parameters
 num_tb = 5
-k_max = 20
+k_max = 52
 
 if __name__ == "__main__":
     # Create Data
-    professor_list = create_professor_list("week1_professors.csv")
-    student_list = create_student_list("week1_students.csv")
+    professor_list = create_professor_list("week2_professors.csv")
+    student_list = create_student_list("week2_students.csv")
     tb_list = [TimeBlock(f"Meeting {id+1}",professor_list,student_list) for id in range(5)]
 
     print(professor_list)
@@ -55,7 +55,8 @@ if __name__ == "__main__":
 
     for professor in professor_list:
         for tb in tb_list:
-            subset_students = [student for student in student_list if student.needs_to_meet_professor(professor)] # Concern: am I getting the correct students
+            subset_students = [student for student in student_list if 
+                student.needs_to_meet_professor(professor) and not tb.student_dict[str(student)]] # Concern: am I getting the correct students
 
             if not professor.available(tb):
                 continue
@@ -63,7 +64,7 @@ if __name__ == "__main__":
             grabbed_students = subset_students[0:k_max]
             tb.set_professor_student_match(professor,grabbed_students)
             for student in grabbed_students:
-                student.professor_dict[str(professor)] = True # Canuse this to check that students have met every professor at end
+                student.professor_dict[str(professor)] = tb.id # Canuse this to check that students have met every professor at end
             
 
     for student in student_list:
@@ -77,4 +78,4 @@ if __name__ == "__main__":
     df_final = pd.concat(df_arr)
     df_final = df_final.T 
     df_final.replace(False,"Available",inplace=True)
-    df_final.to_csv("Final.csv")
+    df_final.to_csv(f"Week2_{k_max}_groups.csv")

@@ -59,7 +59,7 @@ class Student():
             else:
                 failed_prof += key+","
         
-        return f"{self.name} met with {count}/{thresh} (Didn't Meet: {failed_prof})({self._professor_list})"
+        return f"{self.name} met with {count}/{thresh} (Didn't Meet: {failed_prof})({self.professor_dict.items()})"
 
     def __str__(self):
         return self.name
