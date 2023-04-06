@@ -5,7 +5,7 @@ import pandas as pd
 
 def create_professor_list(path_to_csv):
     '''
-    Abstracted away, likely loading a Json file or something
+    Abstracted away, likely loading a Json, csv, or something
     '''
     df = pd.read_csv(path_to_csv)
 
@@ -18,7 +18,7 @@ def create_professor_list(path_to_csv):
 
 def create_student_list(path_to_csv):
     '''
-    Abstractred Awar, likely loading a Json file or something
+    Abstracted away, likely loading a Json, csv, or something
     '''
     df = pd.read_csv(path_to_csv)
 
@@ -35,8 +35,8 @@ professor_sort_key = lambda x: x.availability_metric
 
 
 # RunTime Parameters
-num_tb = 5
-k_max = 52
+num_tb = 5 
+k_max = 52 # Group Size
 
 if __name__ == "__main__":
     # Create Data
@@ -44,11 +44,6 @@ if __name__ == "__main__":
     student_list = create_student_list("week2_students.csv")
     tb_list = [TimeBlock(f"Meeting {id+1}",professor_list,student_list) for id in range(5)]
 
-    print(professor_list)
-    print(student_list)
-    for student in student_list:
-        print(student.summary())
-    print(tb_list)
     # Main run
 
     professor_list = list(sorted(professor_list,key=professor_sort_key)) # Priortize professors with lower availability (NOTE: May need to add a weighting of overlapped timeslots, too)
@@ -56,7 +51,7 @@ if __name__ == "__main__":
     for professor in professor_list:
         for tb in tb_list:
             subset_students = [student for student in student_list if 
-                student.needs_to_meet_professor(professor) and not tb.student_dict[str(student)]] # Concern: am I getting the correct students
+                student.needs_to_meet_professor(professor) and not tb.student_dict[str(student)]] 
 
             if not professor.available(tb):
                 continue
@@ -64,9 +59,8 @@ if __name__ == "__main__":
             grabbed_students = subset_students[0:k_max]
             tb.set_professor_student_match(professor,grabbed_students)
             for student in grabbed_students:
-                student.professor_dict[str(professor)] = tb.id # Canuse this to check that students have met every professor at end
+                student.professor_dict[str(professor)] = tb.id # Can use this to check that students have met every professor at end
             
-
     for student in student_list:
         print(student.summary())
     
