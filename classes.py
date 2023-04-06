@@ -6,7 +6,7 @@
 class Professor():
     def __init__(self,
         name:str,
-        availability_dict,
+        availability_dict:dict,
         ):
 
         self.name = name
@@ -19,6 +19,10 @@ class Professor():
 
     @property
     def availability_metric(self):
+        '''
+        Use their current available timeslots as an availbility metric
+        NOTE: May be a better version in the future?
+        '''
         count = 0
         for key,val in self.availability_dict.items():
             if val:
@@ -50,6 +54,9 @@ class Student():
         return False
     
     def summary(self):
+        '''
+        Quick string summary per student
+        '''
         thresh = len(self.professor_dict)
         count = 0
         failed_prof = ""
@@ -93,7 +100,6 @@ class TimeBlock():
         '''
         Set students to chosen Professor
         '''
-
         for student in student_list:
             student = str(student)
             self.student_dict[student] = professor
